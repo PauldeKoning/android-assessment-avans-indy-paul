@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.navigation.compose.*
 import com.example.mylittleprofile.ui.ponylist.LazyRowItemsDemo
+import com.example.mylittleprofile.ui.ponylist.PonyList
 import java.security.InvalidParameterException
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int) {
@@ -58,7 +59,7 @@ fun AppNavigation() {
     ) {
         NavHost(navController, startDestination = Screen.Home.route) {
             composable(Screen.Home.route) {  }
-            composable(Screen.PonyList.route) { LazyRowItemsDemo() }
+            composable(Screen.PonyList.route) { PonyList() }
             composable(Screen.Profile.route) {  }
         }
     }
