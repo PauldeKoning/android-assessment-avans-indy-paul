@@ -4,17 +4,15 @@ import androidx.annotation.StringRes
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.fragment.app.Fragment
 import androidx.navigation.compose.*
-import com.example.mylittleprofile.ui.ponylist.LazyRowItemsDemo
+import com.example.mylittleprofile.ui.home.Home
 import com.example.mylittleprofile.ui.ponylist.PonyList
-import java.security.InvalidParameterException
+import com.example.mylittleprofile.ui.profile.Profile
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int) {
     object Home : Screen("home", R.string.home)
@@ -58,9 +56,9 @@ fun AppNavigation() {
         }
     ) {
         NavHost(navController, startDestination = Screen.Home.route) {
-            composable(Screen.Home.route) {  }
+            composable(Screen.Home.route) { Home() }
             composable(Screen.PonyList.route) { PonyList() }
-            composable(Screen.Profile.route) {  }
+            composable(Screen.Profile.route) { Profile() }
         }
     }
 

@@ -1,51 +1,34 @@
 package com.example.mylittleprofile.ui.ponylist
 
-import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.BasicNetwork
-import com.android.volley.toolbox.DiskBasedCache
-import com.android.volley.toolbox.HurlStack
-import com.android.volley.toolbox.StringRequest
 import com.example.mylittleprofile.api.PonyApi
-import com.example.mylittleprofile.util.ApiRequest
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
+import com.example.mylittleprofile.model.CharacterModel
 
 @Composable
 fun PonyList() {
-    var message by remember{ mutableStateOf("kanker") }
+    var message by remember { mutableStateOf("kanker") }
+    var ponyList = remember { mutableStateListOf<CharacterModel>() }
 
     val api = PonyApi(LocalContext.current);
 
     Text(text = message);
-
     api.getData { resp ->
-        message = resp;
+        message = resp.status.toString();
+        ponyList.addAll(resp.data)
     }
 
-
-    /*
-    if (message.isNotEmpty()) {
-        Text(text= message)
-    } else {
-        Text(text= "FRICKING MOOIE PONY LIJST A NIFFO")
-    }
-     */
+    PonyRowList(list = ponyList)
 }
 
 @Composable
-fun LazyRowItemsDemo() {
-    LazyColumn {
-        items((1..1000).toList()) {
-            Text(text = "Item $it")
+fun PonyRowList(list: List<CharacterModel>) {
+    LazyColumn() {
+        items(list) { pony ->
+            Text(pony.name)
         }
     }
 }
