@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mylittleprofile.ponylist.PonyListFragment
+import com.example.mylittleprofile.ui.home.PonyList
 import com.example.mylittleprofile.ui.theme.MyLittleProfileTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +32,7 @@ fun Greeting(name: String) {
     Column {
         Text(text = "Hello $name!", textAlign = TextAlign.Center)
 
-        PonyListFragment()
+        PonyList()
     }
 }
 
