@@ -17,7 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Favorite as Favourite
+import androidx.compose.material.icons.outlined.FavoriteBorder as FavouriteBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -44,21 +46,17 @@ import com.example.mylittleprofile.ui.theme.MyLittleProfileTheme
 
 @Composable
 fun PonyList(navController: NavController) {
+    val viewModel = PonyListViewModel(LocalContext.current);
+
     val ponyList = remember { mutableStateListOf<CharacterModel>() }
 
-    val api = PonyApi(LocalContext.current);
+    if(ponyList.isEmpty())
+        viewModel.getPonyData { resp ->
+            ponyList.addAll(resp);
+        }
 
-    api.getData { resp ->
-        ponyList.addAll(resp.data)
-    }
-
-    PonyRowList(navController = navController, list = ponyList)
-}
-
-@Composable
-fun PonyRowList(navController: NavController, list: List<CharacterModel>) {
     LazyColumn {
-        items(list) { pony ->
+        items(ponyList) { pony ->
             Column(
                 Modifier.clickable(
                     onClick = {
@@ -75,7 +73,19 @@ fun PonyRowList(navController: NavController, list: List<CharacterModel>) {
                         .fillMaxWidth()
                 ) {
                     Text(pony.name)
-                    Icon(Icons.Filled.ArrowForward, "Icon")
+                    Row {
+                        if (pony.id == viewModel.getYourFavouritePony()) {
+                            Icon(Icons.Filled.Favourite, "Icon", modifier = Modifier.zIndex(1F).clickable {
+                                viewModel.setYourFavouritePony(0)
+                            })
+                        } else if (viewModel.getYourFavouritePony() == 0) {
+                            Icon(Icons.Outlined.FavouriteBorder, "Icon", modifier = Modifier.zIndex(1F).clickable {
+                                viewModel.setYourFavouritePony(pony.id)
+                            })
+                        }
+                        Spacer(Modifier.size(8.dp))
+                        Icon(Icons.Filled.ArrowForward, "Icon")
+                    }
                 }
                 Divider(color = Color.LightGray, thickness = 1.dp)
             }

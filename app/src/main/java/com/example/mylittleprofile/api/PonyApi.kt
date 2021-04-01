@@ -13,7 +13,7 @@ import com.google.gson.Gson
 
 class PonyApi(private var context: Context) {
 
-    fun getData(callback: (CharactersModel) -> Unit) {
+    fun getPonyData(callback: (CharactersModel) -> Unit) {
         ApiRequest.doRequest(context, "https://ponyweb.ml/v1/character/all") { resp ->
             callback(Gson().fromJson(resp, CharactersModel::class.java))
         }
