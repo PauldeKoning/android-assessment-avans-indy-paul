@@ -1,6 +1,8 @@
 package com.example.mylittleprofile
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -8,6 +10,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -59,10 +62,22 @@ fun AppNavigation() {
                 }
             }
         }
-    ) {
+    ) { padding ->
         NavHost(navController, startDestination = Screen.Home.route) {
-            composable(Screen.Home.route) { Home() }
-            composable(Screen.PonyList.route) { PonyList(navController) }
+            composable(Screen.Home.route) {
+                Column(
+                    Modifier.padding(bottom = padding.calculateBottomPadding())
+                ) {
+                    Home()
+                }
+            }
+            composable(Screen.PonyList.route) {
+                Column(
+                    Modifier.padding(bottom = padding.calculateBottomPadding())
+                ) {
+                    PonyList(navController)
+                }
+            }
             composable(Screen.Profile.route) { Profile() }
             composable(Screen.PonyDetail.route) {
                 PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)

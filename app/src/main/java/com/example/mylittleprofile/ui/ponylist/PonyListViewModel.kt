@@ -2,13 +2,13 @@ package com.example.mylittleprofile.ui.ponylist
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
 import com.example.mylittleprofile.api.PonyApi
 import com.example.mylittleprofile.model.CharacterModel
-import com.example.mylittleprofile.model.CharactersModel
 
 class PonyListViewModel(context: Context) : ViewModel() {
     private val api = PonyApi(context);
@@ -31,7 +31,7 @@ class PonyListViewModel(context: Context) : ViewModel() {
     }
 
     fun getPonyData(callback: (List<CharacterModel>) -> Unit) {
-        api.getPonyData { resp ->
+        api.getPoniesData { resp ->
             callback(resp.data);
         }
     }
