@@ -9,15 +9,20 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.home.Home
+import com.example.mylittleprofile.ui.ponylist.PonyDetail
 import com.example.mylittleprofile.ui.ponylist.PonyList
 import com.example.mylittleprofile.ui.profile.Profile
+import kotlin.reflect.typeOf
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int) {
     object Home : Screen("home", R.string.home)
     object PonyList : Screen("ponylist", R.string.ponylist)
     object Profile : Screen("profile", R.string.profile)
+    object PonyDetail : Screen("ponydetail", R.string.ponydetail)
 }
 
 val items = mapOf(
@@ -57,9 +62,11 @@ fun AppNavigation() {
     ) {
         NavHost(navController, startDestination = Screen.Home.route) {
             composable(Screen.Home.route) { Home() }
-            composable(Screen.PonyList.route) { PonyList() }
+            composable(Screen.PonyList.route) { PonyList(navController) }
             composable(Screen.Profile.route) { Profile() }
+            composable(Screen.PonyDetail.route) {
+                PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
+            }
         }
     }
-
 }

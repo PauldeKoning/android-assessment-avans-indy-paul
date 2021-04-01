@@ -1,6 +1,7 @@
 package com.example.mylittleprofile.api
 
 import android.content.Context
+import android.graphics.Bitmap
 import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.model.CharactersModel
 import com.example.mylittleprofile.util.ApiRequest
@@ -14,8 +15,13 @@ class PonyApi(private var context: Context) {
 
     fun getData(callback: (CharactersModel) -> Unit) {
         ApiRequest.doRequest(context, "https://ponyweb.ml/v1/character/all") { resp ->
-            val bruh = Gson().fromJson(resp, CharactersModel::class.java)
-            callback(bruh)
+            callback(Gson().fromJson(resp, CharactersModel::class.java))
+        }
+    }
+
+    fun getImageData(url: String, callback: (Bitmap) -> Unit) {
+        ApiRequest.doImageRequest(context, url) { resp ->
+            callback(resp);
         }
     }
 

@@ -3,4 +3,5 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="ponylist">Ponies</string>
+    <string name="ponydetail">1</string>
 </resources>
