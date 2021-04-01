@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
@@ -19,14 +20,17 @@ import androidx.preference.PreferenceManager
 import com.example.mylittleprofile.ui.theme.MyLittleProfileTheme
 
 class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    val currentTheme = MutableLiveData<String>("")
+    private val currentTheme = MutableLiveData("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        PreferenceManager
+        val sharedPreferences = PreferenceManager
             .getDefaultSharedPreferences(applicationContext)
-            .registerOnSharedPreferenceChangeListener(this)
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+        onSharedPreferenceChanged(sharedPreferences, "theme")
 
         setContent {
             val theme by currentTheme.observeAsState()
@@ -46,7 +50,7 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (sharedPreferences != null) {
+        if (sharedPreferences != null && key == "theme") {
             currentTheme.value = sharedPreferences.getString(key, "system")
         }
     }
