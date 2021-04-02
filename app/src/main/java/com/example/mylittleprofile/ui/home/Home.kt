@@ -1,6 +1,8 @@
 package com.example.mylittleprofile.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -35,6 +37,10 @@ fun Home() {
             style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)
         )
     } else {
+        // Open actual browser instead maybe?
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        intent.data = Uri.parse(url)
+//        LocalContext.current.startActivity(intent)
         Column(Modifier.fillMaxWidth().fillMaxHeight()) {
             PonyWeb(url);
         }
@@ -46,7 +52,7 @@ fun Home() {
 fun PonyWeb(url: String) {
     return AndroidView({ context ->
         WebView(context).apply {
-            settings.javaScriptEnabled = true
+            settings.javaScriptEnabled = true // Setting it to false does disable the cookie banner tho T_T
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
