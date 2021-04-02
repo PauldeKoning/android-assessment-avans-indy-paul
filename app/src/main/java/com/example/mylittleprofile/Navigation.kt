@@ -1,5 +1,7 @@
 package com.example.mylittleprofile
 
+import android.net.Uri
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.navigation.compose.*
 import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.home.Home
 import com.example.mylittleprofile.ui.ponylist.PonyDetail
+import com.example.mylittleprofile.ui.ponylist.PonyDetailIntent
 import com.example.mylittleprofile.ui.ponylist.PonyList
 import com.example.mylittleprofile.ui.profile.Profile
 import kotlin.reflect.typeOf
@@ -26,6 +29,7 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int) {
     object PonyList : Screen("ponylist", R.string.ponylist)
     object Profile : Screen("profile", R.string.profile)
     object PonyDetail : Screen("ponydetail", R.string.ponydetail)
+    object PonyDetailIntent : Screen("ponydetailintent", R.string.ponydetailintent)
 }
 
 val items = mapOf(
@@ -35,8 +39,15 @@ val items = mapOf(
 )
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(intent: Uri) {
     val navController = rememberNavController()
+
+    var defaultRoute = Screen.Home.route;
+
+    if (intent != Uri.EMPTY) {
+        defaultRoute = Screen.PonyDetailIntent.route
+    }
+
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -63,7 +74,7 @@ fun AppNavigation() {
             }
         }
     ) { padding ->
-        NavHost(navController, startDestination = Screen.Home.route) {
+        NavHost(navController, startDestination = defaultRoute) {
             composable(Screen.Home.route) {
                 Column(
                     Modifier.padding(bottom = padding.calculateBottomPadding())
@@ -81,6 +92,10 @@ fun AppNavigation() {
             composable(Screen.Profile.route) { Profile() }
             composable(Screen.PonyDetail.route) {
                 PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
+            }
+            composable(Screen.PonyDetailIntent.route) {
+                // TODO add some valdiation on the intent URI (regex)
+                PonyDetailIntent(intent.toString().substringAfter("welove.ponies/").toInt())
             }
         }
     }

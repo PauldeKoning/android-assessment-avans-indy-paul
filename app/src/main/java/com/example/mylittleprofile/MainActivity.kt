@@ -18,6 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.example.mylittleprofile.ui.theme.MyLittleProfileTheme
+import android.R
+
+import android.widget.TextView
+
+import android.content.Intent
+import android.net.Uri
+
 
 class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val currentTheme = MutableLiveData("")
@@ -25,6 +32,18 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /*
+            Do intent stuff
+         */
+        val intent = intent
+        var uri: Uri? = intent.data
+        if (uri == null) {
+            uri = Uri.EMPTY;
+        }
+
+        /*
+            Do preference stuff
+         */
         val sharedPreferences = PreferenceManager
             .getDefaultSharedPreferences(applicationContext)
 
@@ -44,9 +63,11 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
                     Greeting("Android")
                 }
 
-                AppNavigation()
+                AppNavigation(uri!!)
             }
         }
+
+
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
