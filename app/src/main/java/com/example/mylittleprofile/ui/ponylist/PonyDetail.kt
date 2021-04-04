@@ -3,6 +3,8 @@ package com.example.mylittleprofile.ui.ponylist
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +20,7 @@ fun PonyDetail(pony: CharacterModel) {
         Modifier
             .padding(16.dp)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         PonyDetailInfoRow("Name:", pony.name)
         PonyDetailInfoRow("Gender:", pony.sex)

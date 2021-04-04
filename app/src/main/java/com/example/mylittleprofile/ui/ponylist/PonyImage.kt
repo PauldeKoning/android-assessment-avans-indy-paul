@@ -1,12 +1,16 @@
 package com.example.mylittleprofile.ui.ponylist
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun PonyImage(url: String) {
@@ -20,5 +24,5 @@ fun PonyImage(url: String) {
         }
     }
 
-    Image(imageBitmapRemember, "Pony", contentScale = ContentScale.Fit)
+    Image(imageBitmapRemember, "Pony", contentScale = ContentScale.Fit, modifier = Modifier.height(200.dp).width(200.dp))
 }
