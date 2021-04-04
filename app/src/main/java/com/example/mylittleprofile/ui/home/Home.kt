@@ -15,7 +15,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -32,16 +34,30 @@ fun Home() {
             url = resp;
         }
 
-        Text("Select a favourite pony in the ponies list to view more info (If you have already selected a pony, please wait a second)",
-            modifier = Modifier.padding(16.dp),
-            style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)
-        )
+        Column(
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()) {
+            Text("Select a favourite pony in the ponies list to view more info",
+                modifier = Modifier.padding(16.dp),
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            )
+
+            Text("(If you have already selected a pony, please wait a second)",
+                modifier = Modifier.padding(16.dp),
+                style = TextStyle(fontStyle = FontStyle.Italic, fontSize = 12.sp)
+            )
+        }
+
     } else {
         // Open actual browser instead maybe?
 //        val intent = Intent(Intent.ACTION_VIEW)
 //        intent.data = Uri.parse(url)
 //        LocalContext.current.startActivity(intent)
-        Column(Modifier.fillMaxWidth().fillMaxHeight()) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()) {
             PonyWeb(url);
         }
     }

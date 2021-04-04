@@ -34,17 +34,18 @@ fun Profile() {
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        Button(onClick = {
-            val intent = Intent(localContext, PreferencesActivity::class.java)
-            localContext.startActivity(intent)
-        }) {
+        Button(
+            onClick = {
+                val intent = Intent(localContext, PreferencesActivity::class.java)
+                localContext.startActivity(intent)
+            },
+            modifier = Modifier.padding(bottom = 16.dp),
+        ) {
             Text("Open settings")
         }
 
         PermissionButton(model = viewModel)
     }
-
-
 }
 
 //private const val PERMISSIONS_REQUEST_CODE = 10
@@ -73,22 +74,17 @@ fun PermissionButton(model: ProfileViewModel) {
 //          )
 //    }
 
-    Column(
-        Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    ) {
-        Button(onClick = {
-            requestPerm.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }) {
-            Text("Request location")
-        }
-
-        val locationState = model.currentLocation.observeAsState(null)
-        if (locationState.value != null) {
-            LocationInfo(loc = locationState.value!!)
-        }
+    Button(onClick = {
+        requestPerm.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }) {
+        Text("Request location")
     }
+
+    val locationState = model.currentLocation.observeAsState(null)
+    if (locationState.value != null) {
+        LocationInfo(loc = locationState.value!!)
+    }
+
 }
 
 
