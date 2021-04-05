@@ -27,7 +27,7 @@ class PonyApi(private var context: Context) {
 
     fun getImageData(url: String, callback: (Bitmap) -> Unit) {
         ApiRequest.doImageRequest(context, url) { resp ->
-            callback(resp);
+            callback(resp)
         }
     }
 

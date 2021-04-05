@@ -32,7 +32,9 @@ fun PonyList(navController: NavController) {
 
     if(ponyList.isEmpty()) {
         viewModel.getPonyData { resp ->
-            ponyList.addAll(resp)
+            if(resp.isNotEmpty()) {
+                ponyList.addAll(resp as List<CharacterModel>)
+            }
         }
     }
 

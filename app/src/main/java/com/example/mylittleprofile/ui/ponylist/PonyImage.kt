@@ -26,7 +26,7 @@ fun PonyImage(url: String) {
 
     if(imageBitmapRemember.width == 1) {
         viewModel.loadImageFromURL(url) { resp ->
-            imageBitmapRemember = resp.asImageBitmap();
+            imageBitmapRemember = resp.asImageBitmap()
         }
     }
 

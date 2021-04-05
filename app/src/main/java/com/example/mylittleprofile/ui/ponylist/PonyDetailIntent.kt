@@ -1,10 +1,11 @@
 package com.example.mylittleprofile.ui.ponylist
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.example.mylittleprofile.model.CharacterModel
 
 @Composable
@@ -13,14 +14,25 @@ fun PonyDetailIntent(id: Int) {
 
     val ponyList = remember { mutableStateListOf<CharacterModel>() }
 
-    if(ponyList.isEmpty()) {
+    val (isFetched, setFetched) = remember { mutableStateOf(false) }
+
+    if(ponyList.isEmpty() && !isFetched) {
         viewModel.getPonyData { resp ->
-            ponyList.add(resp);
+            if (resp != null) {
+                ponyList.add(resp)
+            }
+            setFetched(true)
         }
 
-        Text("Hey there! We're fetching your pony!")
-    } else {
+        Text("Hey there! We're fetching your pony!", Modifier.padding(16.dp))
+    } else if(ponyList.isNotEmpty() && isFetched) {
         PonyDetail(pony = ponyList[0])
+    } else {
+        PonyDetailIntentError()
     }
-    
+}
+
+@Composable
+fun PonyDetailIntentError() {
+    Text("We couldn't fetch your pony.", Modifier.padding(16.dp))
 }

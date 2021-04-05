@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 data class CharactersModel (
     var status: Int,
-    var data: List<CharacterModel>
+    var data: List<CharacterModel?>
 )
 
 @Parcelize

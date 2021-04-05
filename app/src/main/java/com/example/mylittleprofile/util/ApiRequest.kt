@@ -26,7 +26,7 @@ class ApiRequest() {
 // Formulate the request and handle the response.
             val stringRequest = StringRequest(Request.Method.GET, url,
                 { response ->
-                    callback(response.toString());
+                    callback(response.toString())
                 },
                 { error ->
                     // Handle error
@@ -52,7 +52,7 @@ class ApiRequest() {
             val imageRequest = ImageRequest(
                 url,
                 {bitmap -> // response listener
-                    callback(bitmap);
+                    callback(bitmap)
                 },
                 0, // max width
                 0, // max height

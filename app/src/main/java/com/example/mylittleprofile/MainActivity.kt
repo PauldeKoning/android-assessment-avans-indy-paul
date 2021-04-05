@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
         val intent = intent
         var uri: Uri? = intent.data
         if (uri == null) {
-            uri = Uri.EMPTY;
+            uri = Uri.EMPTY
         }
 
         /*

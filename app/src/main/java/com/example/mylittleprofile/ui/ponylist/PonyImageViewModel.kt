@@ -8,7 +8,7 @@ import com.example.mylittleprofile.api.PonyApi
 class PonyImageViewModel(context: Context) : ViewModel() {
 
 
-    private val api = PonyApi(context);
+    private val api = PonyApi(context)
 
     fun loadImageFromURL(url: String, callback: (Bitmap) -> Unit) {
         api.getImageData(url) { resp ->

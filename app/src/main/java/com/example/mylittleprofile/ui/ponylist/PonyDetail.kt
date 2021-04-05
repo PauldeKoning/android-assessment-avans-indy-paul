@@ -32,9 +32,9 @@ fun PonyDetail(pony: CharacterModel) {
             PonyDetailInfoRow("Residence:", pony.residence!!)
         }
 
-        LazyRow(modifier = Modifier.padding(bottom = 50.dp)) {
+        LazyRow {
             items(pony.image) { url ->
-                PonyImage(url);
+                PonyImage(url)
             }
         }
     }
@@ -45,7 +45,7 @@ fun PonyDetailInfoRow(key: String, value: String) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
-            .padding(0.dp, 0.dp, 0.dp, 12.dp)
+            .padding(bottom = 12.dp)
             .fillMaxWidth()
     ) {
         Text(key, style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp))

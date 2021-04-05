@@ -1,6 +1,7 @@
 package com.example.mylittleprofile
 
 import android.net.Uri
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import com.example.mylittleprofile.ui.home.Home
 import com.example.mylittleprofile.ui.home.PonyWeb
 import com.example.mylittleprofile.ui.ponylist.PonyDetail
 import com.example.mylittleprofile.ui.ponylist.PonyDetailIntent
+import com.example.mylittleprofile.ui.ponylist.PonyDetailIntentError
 import com.example.mylittleprofile.ui.ponylist.PonyList
 import com.example.mylittleprofile.ui.settings.Settings
 
@@ -38,7 +40,7 @@ val items = mapOf(
 fun AppNavigation(intent: Uri) {
     val navController = rememberNavController()
 
-    var defaultRoute = Screen.Home.route;
+    var defaultRoute = Screen.Home.route
 
     if (intent != Uri.EMPTY) {
         defaultRoute = Screen.PonyDetailIntent.route
@@ -75,31 +77,34 @@ fun AppNavigation(intent: Uri) {
             }
         }
     ) { padding ->
-        NavHost(navController, startDestination = defaultRoute) {
-            composable(Screen.Home.route) {
-                Column(
-                    Modifier.padding(bottom = padding.calculateBottomPadding())
-                ) {
+        Column(
+            Modifier.padding(bottom = padding.calculateBottomPadding())
+        ) {
+            NavHost(navController, startDestination = defaultRoute) {
+                composable(Screen.Home.route) {
                     Home(navController)
                 }
-            }
-            composable(Screen.PonyList.route) {
-                Column(
-                    Modifier.padding(bottom = padding.calculateBottomPadding())
-                ) {
+                composable(Screen.PonyList.route) {
                     PonyList(navController)
                 }
-            }
-            composable(Screen.Settings.route) { Settings() }
-            composable(Screen.Browser.route) {
-                PonyWeb(navController.previousBackStackEntry?.arguments?.getString("url")!!)
-            }
-            composable(Screen.PonyDetail.route) {
-                PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
-            }
-            composable(Screen.PonyDetailIntent.route) {
-                // TODO add some valdiation on the intent URI (regex)
-                PonyDetailIntent(intent.toString().substringAfter("welove.ponies/").toInt())
+                composable(Screen.Settings.route) { Settings() }
+                composable(Screen.Browser.route) {
+                    PonyWeb(navController.previousBackStackEntry?.arguments?.getString("url")!!)
+                }
+                composable(Screen.PonyDetail.route) {
+                    PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
+                }
+                composable(Screen.PonyDetailIntent.route) {
+                    val regex = "^[0-9]*$".toRegex()
+
+                    val regexResult = regex.matches(intent.toString().substringAfter("welove.ponies/"))
+
+                    if (regexResult) {
+                        PonyDetailIntent(intent.toString().substringAfter("welove.ponies/").toInt())
+                    } else {
+                        PonyDetailIntentError()
+                    }
+                }
             }
         }
     }
