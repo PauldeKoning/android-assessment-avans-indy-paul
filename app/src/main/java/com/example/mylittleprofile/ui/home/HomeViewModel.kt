@@ -43,24 +43,6 @@ class HomeViewModel(context: Context) : ViewModel() {
                 this.currentLocation.value = addresses.first()
             }
         }
-
-        // https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient.html
-        // FusedClient is supposed to be safer but it's slower and less precise??
-
-//        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-//        fusedLocationClient.lastLocation
-//            .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
-//                if (location != null) {
-//                    val addresses = Geocoder(context).getFromLocation(location.latitude, location.longitude, 1)
-//                    if (addresses.size > 0) {
-//                        this.currentLocation.value = addresses.first()
-//                    }
-//                }
-//            }
-//            .addOnFailureListener { e ->
-//                Log.d("MapDemoActivity", "Error trying to get last GPS location")
-//                e.printStackTrace()
-//            }
     }
 
 }

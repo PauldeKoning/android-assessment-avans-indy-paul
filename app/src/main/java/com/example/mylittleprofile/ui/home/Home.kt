@@ -138,7 +138,7 @@ fun Home(navController: NavController) {
 fun PonyWeb(url: String) {
     return AndroidView({ context ->
         WebView(context).apply {
-            settings.javaScriptEnabled = true // Setting it to false does disable the cookie banner tho T_T
+            settings.javaScriptEnabled = true
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

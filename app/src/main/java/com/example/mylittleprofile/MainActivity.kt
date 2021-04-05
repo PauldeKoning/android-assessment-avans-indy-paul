@@ -26,18 +26,12 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*
-            Do intent stuff
-         */
         val intent = intent
         var uri: Uri? = intent.data
         if (uri == null) {
             uri = Uri.EMPTY
         }
 
-        /*
-            Do preference stuff
-         */
         val sharedPreferences = PreferenceManager
             .getDefaultSharedPreferences(applicationContext)
 
@@ -52,14 +46,11 @@ class MainActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
                 "dark" -> true
                 else -> isSystemInDarkTheme()
             }) {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     AppNavigation(uri!!)
                 }
             }
         }
-
-
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
