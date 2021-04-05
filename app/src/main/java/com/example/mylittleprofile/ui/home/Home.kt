@@ -3,7 +3,6 @@ package com.example.mylittleprofile.ui.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
