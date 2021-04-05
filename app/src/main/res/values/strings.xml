@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyLittleProfile</string>
     <string name="home">Home</string>
-    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
     <string name="ponylist">Ponies</string>
     <string name="ponydetail">Pony</string>
     <string name="ponydetailintent">Pony Intent</string>

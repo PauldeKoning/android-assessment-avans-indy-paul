@@ -32,7 +32,7 @@ fun PonyDetail(pony: CharacterModel) {
             PonyDetailInfoRow("Residence:", pony.residence!!)
         }
 
-        LazyRow {
+        LazyRow(modifier = Modifier.padding(bottom = 50.dp)) {
             items(pony.image) { url ->
                 PonyImage(url);
             }

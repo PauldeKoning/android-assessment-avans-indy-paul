@@ -1,7 +1,6 @@
 package com.example.mylittleprofile
 
 import android.net.Uri
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,24 +9,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.home.Home
 import com.example.mylittleprofile.ui.ponylist.PonyDetail
 import com.example.mylittleprofile.ui.ponylist.PonyDetailIntent
 import com.example.mylittleprofile.ui.ponylist.PonyList
-import com.example.mylittleprofile.ui.profile.Profile
-import kotlin.reflect.typeOf
+import com.example.mylittleprofile.ui.settings.Settings
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int) {
     object Home : Screen("home", R.string.home)
     object PonyList : Screen("ponylist", R.string.ponylist)
-    object Profile : Screen("profile", R.string.profile)
+    object Settings : Screen("settings", R.string.settings)
     object PonyDetail : Screen("ponydetail", R.string.ponydetail)
     object PonyDetailIntent : Screen("ponydetailintent", R.string.ponydetailintent)
 }
@@ -35,7 +32,7 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int) {
 val items = mapOf(
     Screen.Home to Icons.Filled.Home,
     Screen.PonyList to Icons.Filled.List,
-    Screen.Profile to Icons.Filled.AccountCircle
+    Screen.Settings to Icons.Filled.Settings
 )
 
 @Composable
@@ -49,6 +46,11 @@ fun AppNavigation(intent: Uri) {
     }
 
     Scaffold(
+        topBar = {
+          TopAppBar(
+              title = { Text ("My Little Profile") }
+          )
+        },
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -89,7 +91,7 @@ fun AppNavigation(intent: Uri) {
                     PonyList(navController)
                 }
             }
-            composable(Screen.Profile.route) { Profile() }
+            composable(Screen.Settings.route) { Settings() }
             composable(Screen.PonyDetail.route) {
                 PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
             }
