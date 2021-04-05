@@ -5,22 +5,23 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
 import com.example.mylittleprofile.api.PonyApi
+import com.example.mylittleprofile.model.CharacterModel
 
 class HomeViewModel(context: Context) : ViewModel() {
 
     private val api = PonyApi(context);
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun getPonyInfoURL(callback: (String) -> Unit) {
+    fun getPonyInfo(callback: (CharacterModel?) -> Unit) {
         val favouritePony = sharedPreferences.getInt("FAVOURITE_PONY", 0)
 
         if (favouritePony == 0) {
-            callback("")
+            callback(null)
             return
         }
 
         api.getPonyData(favouritePony) { resp ->
-            callback(resp.data[0].url)
+            callback(resp.data[0])
         }
 
     }

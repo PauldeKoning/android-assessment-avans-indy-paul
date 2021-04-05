@@ -6,10 +6,8 @@ import android.net.Uri
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -21,17 +19,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.mylittleprofile.PreferencesActivity
+import com.example.mylittleprofile.model.CharacterModel
+import com.example.mylittleprofile.ui.ponylist.PonyImage
 
 
 @Composable
 fun Home() {
-    var url by remember { mutableStateOf("") }
+    var favouritePony by remember { mutableStateOf<CharacterModel?>(null) }
 
+    val context = LocalContext.current
     val viewModel = HomeViewModel(LocalContext.current)
 
-    if (url == "") {
-        viewModel.getPonyInfoURL { resp ->
-            url = resp;
+    if (favouritePony == null) {
+        viewModel.getPonyInfo { resp ->
+            if (resp != null) {
+                favouritePony = resp;
+            }
         }
 
         Column(
@@ -50,16 +54,68 @@ fun Home() {
         }
 
     } else {
+        Column(
+            Modifier
+                .padding(16.dp)
+                .fillMaxHeight()
+                .fillMaxWidth()) {
+            Row(Modifier.fillMaxWidth()) {
+                Text(
+                    "Your favourite pony is:",
+                    style = TextStyle(fontSize = 14.sp),
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+
+                Text(
+                    favouritePony!!.name,
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                )
+            }
+            Row(Modifier.fillMaxWidth().padding(16.dp)) {
+                Button(
+                    modifier = Modifier.padding(end = 16.dp),
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(favouritePony!!.url)
+                        context.startActivity(intent)
+                    },
+                ) {
+                    Text("See wiki")
+                }
+
+                Button(
+                    onClick = {
+                        val sendIntent: Intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "My favourite pony is ${favouritePony!!.name}.\n\nhttp://welove.ponies/${favouritePony!!.id}")
+                            type = "text/plain"
+                        }
+
+                        val shareIntent = Intent.createChooser(sendIntent, null)
+                        context.startActivity(shareIntent)
+                    },
+                ) {
+                    Text("Share")
+                }
+            }
+
+            if (favouritePony!!.image.isNotEmpty()) {
+                PonyImage(favouritePony!!.image[0])
+            }
+        }
+
         // Open actual browser instead maybe?
+
+
 //        val intent = Intent(Intent.ACTION_VIEW)
 //        intent.data = Uri.parse(url)
 //        LocalContext.current.startActivity(intent)
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()) {
-            PonyWeb(url);
-        }
+//        Column(
+//            Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight()) {
+//            PonyWeb(url);
+//        }
     }
 }
 
