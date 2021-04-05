@@ -18,7 +18,7 @@ import com.example.mylittleprofile.ui.theme.Nord5
 
 @Composable
 fun PonyImage(url: String) {
-    var imageBitmapRemember by remember { mutableStateOf<ImageBitmap>(ImageBitmap(1, 1, ImageBitmapConfig.Argb8888)) }
+    var imageBitmapRemember by remember { mutableStateOf(ImageBitmap(1, 1, ImageBitmapConfig.Argb8888)) }
 
     val viewModel = PonyImageViewModel(LocalContext.current)
 

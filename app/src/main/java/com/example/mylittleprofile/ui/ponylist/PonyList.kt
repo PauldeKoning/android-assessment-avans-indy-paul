@@ -21,6 +21,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.example.mylittleprofile.model.CharacterModel
+import java.util.*
 import androidx.compose.material.icons.filled.Favorite as Favourite
 import androidx.compose.material.icons.outlined.FavoriteBorder as FavouriteBorder
 
@@ -50,8 +51,8 @@ fun PonyList(navController: NavController) {
         )
 
         LazyColumn {
-            items(ponyList.filter {
-                    p -> p.name.toLowerCase().contains(searchInput.toLowerCase())
+            items(ponyList.filter { p ->
+                p.name.toLowerCase(Locale.ROOT).contains(searchInput.toLowerCase(Locale.ROOT))
             }) { pony ->
                 Column(
                     Modifier.clickable(

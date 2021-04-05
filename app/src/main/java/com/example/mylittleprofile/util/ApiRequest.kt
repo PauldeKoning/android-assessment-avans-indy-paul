@@ -8,7 +8,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.*
 
-class ApiRequest() {
+class ApiRequest {
 
     companion object {
         fun doRequest(context: Context, url: String, callback: (String) -> Unit) {

@@ -14,7 +14,7 @@ class PonyListViewModel(context: Context) : ViewModel() {
     private val api = PonyApi(context)
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    var favouritePony by mutableStateOf(0)
+    private var favouritePony by mutableStateOf(0)
 
     fun setYourFavouritePony(id: Int) {
         val editor = sharedPreferences.edit()
