@@ -26,13 +26,13 @@ import androidx.compose.material.icons.outlined.FavoriteBorder as FavouriteBorde
 
 @Composable
 fun PonyList(navController: NavController) {
-    val viewModel = PonyListViewModel(LocalContext.current);
+    val viewModel = PonyListViewModel(LocalContext.current)
 
     val ponyList = remember { mutableStateListOf<CharacterModel>() }
 
     if(ponyList.isEmpty()) {
         viewModel.getPonyData { resp ->
-            ponyList.addAll(resp);
+            ponyList.addAll(resp)
         }
     }
 

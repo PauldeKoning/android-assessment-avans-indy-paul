@@ -10,24 +10,23 @@ import android.webkit.WebViewClient
 import androidx.activity.compose.registerForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.materialIcon
+import androidx.compose.material.icons.filled.Launch
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.mylittleprofile.PreferencesActivity
 import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.ponylist.PonyImage
 
@@ -41,7 +40,7 @@ fun Home() {
     if (favouritePony == null) {
         viewModel.getPonyInfo { resp ->
             if (resp != null) {
-                favouritePony = resp;
+                favouritePony = resp
             }
         }
 
@@ -84,12 +83,14 @@ fun Home() {
             Modifier
                 .padding(16.dp)
                 .fillMaxHeight()
-                .fillMaxWidth()) {
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()) {
                 Text(
                     "Your favourite pony is:",
-                    style = TextStyle(fontSize = 14.sp),
+                    style = TextStyle(fontSize = 16.sp),
                     modifier = Modifier.padding(end = 16.dp),
                 )
 
@@ -106,6 +107,8 @@ fun Home() {
                 Button(
                     modifier = Modifier.padding(end = 16.dp),
                     onClick = {
+                        // TODO: Open PonyWeb within app navigation
+
                         //        val intent = Intent(Intent.ACTION_VIEW)
                         //        intent.data = Uri.parse(url)
                         //        LocalContext.current.startActivity(intent)
@@ -120,7 +123,7 @@ fun Home() {
                         context.startActivity(intent)
                     },
                 ) {
-                    Icon(Icons.Filled.Launch, "", modifier = Modifier.padding(end = 6.dp))
+                    Icon(Icons.Filled.Launch, "Launch icon", modifier = Modifier.padding(end = 6.dp))
                     Text("See Wiki")
                 }
 
@@ -129,7 +132,7 @@ fun Home() {
                         requestPerm.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                     },
                 ) {
-                    Icon(Icons.Filled.Share, "", modifier = Modifier.padding(end = 6.dp))
+                    Icon(Icons.Filled.Share, "Share icon", modifier = Modifier.padding(end = 6.dp))
                     Text("Share")
                 }
             }
