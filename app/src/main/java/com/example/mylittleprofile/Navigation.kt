@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.*
 import com.example.mylittleprofile.ui.home.Home
+import com.example.mylittleprofile.ui.home.PonyWeb
 import com.example.mylittleprofile.ui.ponylist.PonyDetail
 import com.example.mylittleprofile.ui.ponylist.PonyDetailIntent
 import com.example.mylittleprofile.ui.ponylist.PonyList
@@ -22,6 +23,7 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int) {
     object Home : Screen("home", R.string.home)
     object PonyList : Screen("ponylist", R.string.ponylist)
     object Settings : Screen("settings", R.string.settings)
+    object Browser : Screen("browser", R.string.browser)
     object PonyDetail : Screen("ponydetail", R.string.ponydetail)
     object PonyDetailIntent : Screen("ponydetailintent", R.string.ponydetailintent)
 }
@@ -78,7 +80,7 @@ fun AppNavigation(intent: Uri) {
                 Column(
                     Modifier.padding(bottom = padding.calculateBottomPadding())
                 ) {
-                    Home()
+                    Home(navController)
                 }
             }
             composable(Screen.PonyList.route) {
@@ -89,6 +91,9 @@ fun AppNavigation(intent: Uri) {
                 }
             }
             composable(Screen.Settings.route) { Settings() }
+            composable(Screen.Browser.route) {
+                PonyWeb(navController.previousBackStackEntry?.arguments?.getString("url")!!)
+            }
             composable(Screen.PonyDetail.route) {
                 PonyDetail(navController.previousBackStackEntry?.arguments?.getParcelable("pony")!!)
             }

@@ -27,11 +27,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.ponylist.PonyImage
 
 @Composable
-fun Home() {
+fun Home(navController: NavController) {
     var favouritePony by remember { mutableStateOf<CharacterModel?>(null) }
 
     val context = LocalContext.current
@@ -107,20 +109,8 @@ fun Home() {
                 Button(
                     modifier = Modifier.padding(end = 16.dp),
                     onClick = {
-                        // TODO: Open PonyWeb within app navigation
-
-                        //        val intent = Intent(Intent.ACTION_VIEW)
-                        //        intent.data = Uri.parse(url)
-                        //        LocalContext.current.startActivity(intent)
-                        //        Column(
-                        //            Modifier
-                        //                .fillMaxWidth()
-                        //                .fillMaxHeight()) {
-                        //            PonyWeb(url);
-                        //        }
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(favouritePony!!.url)
-                        context.startActivity(intent)
+                        navController.currentBackStackEntry?.arguments?.putString("url", favouritePony!!.url)
+                        navController.navigate("browser")
                     },
                 ) {
                     Icon(Icons.Filled.Launch, "Launch icon", modifier = Modifier.padding(end = 6.dp))
