@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.mylittleprofile.PreferencesActivity
-
 
 @Composable
 fun Settings() {
@@ -30,7 +33,13 @@ fun Settings() {
             },
             modifier = Modifier.padding(bottom = 16.dp),
         ) {
-            Text("Theme settings")
+
+            if (MaterialTheme.colors.isLight) {
+                Icon(Icons.Filled.LightMode, "", modifier = Modifier.padding(end = 6.dp))
+            } else {
+                Icon(Icons.Filled.DarkMode, "", modifier = Modifier.padding(end = 6.dp))
+            }
+            Text("Theme Settings")
         }
 
         Button(onClick = {
@@ -39,7 +48,8 @@ fun Settings() {
             intent.data = uri
             context.startActivity(intent)
         }) {
-            Text("Open app details")
+            Icon(Icons.Filled.Info, "", modifier = Modifier.padding(end = 6.dp))
+            Text("Open App Details")
         }
     }
 }

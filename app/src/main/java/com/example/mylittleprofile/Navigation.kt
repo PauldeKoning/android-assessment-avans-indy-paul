@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -31,7 +28,7 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int) {
 
 val items = mapOf(
     Screen.Home to Icons.Filled.Home,
-    Screen.PonyList to Icons.Filled.List,
+    Screen.PonyList to Icons.Filled.FormatListBulleted,
     Screen.Settings to Icons.Filled.Settings
 )
 

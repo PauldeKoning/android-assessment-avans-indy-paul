@@ -14,8 +14,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -31,7 +30,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.mylittleprofile.PreferencesActivity
 import com.example.mylittleprofile.model.CharacterModel
 import com.example.mylittleprofile.ui.ponylist.PonyImage
-
 
 @Composable
 fun Home() {
@@ -122,8 +120,8 @@ fun Home() {
                         context.startActivity(intent)
                     },
                 ) {
-                    Icon(Icons.Filled.ExitToApp, "", modifier = Modifier.padding(end = 6.dp))
-                    Text("See wiki")
+                    Icon(Icons.Filled.Launch, "", modifier = Modifier.padding(end = 6.dp))
+                    Text("See Wiki")
                 }
 
                 Button(
