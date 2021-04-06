@@ -36,7 +36,10 @@ class HomeViewModel(context: Context) : ViewModel() {
     @SuppressLint("MissingPermission")
     fun getLastLocation(context: Context) {
         val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        var location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (location == null) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        }
         if (location != null) {
             val addresses = Geocoder(context).getFromLocation(location.latitude, location.longitude, 1)
             if (addresses.size > 0) {
