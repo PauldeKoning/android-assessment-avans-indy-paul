@@ -40,6 +40,7 @@ class HomeViewModel(context: Context) : ViewModel() {
         if (location == null) {
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         }
+
         if (location != null) {
             val addresses = Geocoder(context).getFromLocation(location.latitude, location.longitude, 1)
             if (addresses.size > 0) {
@@ -47,5 +48,4 @@ class HomeViewModel(context: Context) : ViewModel() {
             }
         }
     }
-
 }
